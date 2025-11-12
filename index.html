@@ -152,30 +152,13 @@
     </header>
 
     <main>
-      <h2>Proposition: Some precincts are significantly worse that others historically.</h2>
+      <h2>Surface Temperature vs Latitude (2010)</h2>
+  <label for="month">Select Month:</label>
+  <select id="month"></select>
+  <svg id="chart" width="800" height="500"></svg>
+  <div class="tooltip" id="tooltip" hidden></div>
+  <script type="module" src="datavis.js"></script>
 
-      <section>
-        <h3>Total CO Emissions by Year</h3>
-
-        <figure>
-          <img src="images/precinct_sum.PNG" alt="" />
-          <figcaption>Sum of Precinct Complaints</figcaption>
-        </figure>
-
-        <p>Design Decisions and Rationale:</p>
-
-        <ul>
-          <li>Decision to bin the data - -1
-It really depends on how you bin the data, but in this case, because I put over 1250, it could realistically be anything. It downplays how many complaints were in that area.
-</li>
-          <li>The way the data was presented on the map - -2
-Since this is a sum of all complaints made to the precinct over the course of 35 years, it removes all historical context of these complaints. It also makes certain areas of New York look like they might be worse than they actually are.
-</li>
-          <li>Title - 2
-Although this is a fundamentally dishonest graph, the title is exactly what the graph represents.
-</li>
-        </ul>
     </main>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"c822b88e119346678db149ed7b7721c9","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
