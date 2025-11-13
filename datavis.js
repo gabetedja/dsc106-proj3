@@ -15,17 +15,57 @@ const data = await d3.csv("data/tas_vs_lat_2010.csv", d => ({
   lat: +d.lat,
   tas: +d.tas
 }));
+const months = [...new Set(data.map(d => d.month))].sort((a, b) => a - b);
+const sliderWidth = 900;
 
-const months = [...new Set(data.map(d => d.month))];
+const slider = d3.select("#month")
+  .append("input")
+  .attr("type", "range")
+  .attr("min", d3.min(months))
+  .attr("max", d3.max(months))
+  .attr("step", 1)
+  .attr("value", d3.min(months))
+  .attr("class", "slider")
+  .style("width", sliderWidth + "px")
+  .style("display", "block")
+  .style("margin", "0 auto");
 
-const dropdown = d3.select("#month");
-dropdown.selectAll("option")
+const labelContainer = d3.select("#month")
+  .append("div")
+  .attr("class", "slider-labels")
+  .style("display", "flex")
+  .style("justify-content", "space-between")
+  .style("width", "75%")
+  .style("margin", "0 auto")
+  .style("font-size", "0.9rem");
+
+labelContainer.selectAll("span")
+  .data(months)
+  .join("span")
+  .text(d => new Date(2000, d - 1).toLocaleString('default', { month: 'short' }));
+const tickList = d3.select("#month")
+  .append("datalist")
+  .attr("id", "monthTicks");
+
+slider.attr("list", "monthTicks");
+
+tickList.selectAll("option")
   .data(months)
   .join("option")
   .attr("value", d => d)
-  .text(d => new Date(2000, d - 1).toLocaleString('default', { month: 'long' }));
+  .text(d => new Date(2000, d - 1).toLocaleString('default', { month: 'short' }));
 
-dropdown.on("change", () => draw(+dropdown.node().value));
+const label = d3.select("#month")
+  .append("div")
+  .attr("id", "monthLabel")
+  .style("margin-top", "10px")
+  .text(new Date(2000, d3.min(months) - 1).toLocaleString('default', { month: 'long' }));
+
+slider.on("input", function() {
+  const monthValue = +this.value;
+  label.text(new Date(2000, monthValue - 1).toLocaleString('default', { month: 'long' }));
+  draw(monthValue);
+});
 
 const xScale = d3.scaleLinear().domain([-90, 90]).range([0, width]);
 const yScale = d3.scaleLinear().range([height, 0]);
